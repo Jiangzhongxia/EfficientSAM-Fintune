@@ -1,0 +1,19 @@
+                # 在 loss 计算之前插入
+                if batch_idx == 0:  # 每个 epoch 只看第一张
+                    # 取出第一张图和对应的 mask
+                    debug_img = images[0].cpu().numpy().transpose(1, 2, 0) # (C,H,W) -> (H,W,C)
+                    debug_mask = target_masks[0].cpu().numpy() # (H,W)
+                    
+                    # 反归一化图片以便显示 (假设是 standard imagenet norm)
+                    mean = np.array([0.485, 0.456, 0.406])
+                    std = np.array([0.229, 0.224, 0.225])
+                    debug_img = std * debug_img + mean
+                    debug_img = np.clip(debug_img, 0, 1)
+                    
+                    # 叠加密集 Mask 看看对不对
+                    import matplotlib.pyplot as plt
+                    plt.figure(figsize=(10,5))
+                    plt.subplot(1,2,1); plt.imshow(debug_img); plt.title("Training Image")
+                    plt.subplot(1,2,2); plt.imshow(debug_mask); plt.title("Target Mask (Resized)")
+                    plt.savefig(f"debug_alignment_epoch_{self.current_epoch}.png")
+                    plt.close()

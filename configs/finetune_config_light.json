@@ -1,0 +1,55 @@
+{
+  "model": {
+    "student_variant": "vitt",
+    "teacher_variant": null,
+    "freeze_encoder": true,
+    "freeze_prompt_encoder": true
+  },
+  "dataset": {
+    "train_root": "path/to/your/train/images",
+    "train_annotation": "path/to/your/train/annotations.json",
+    "val_root": "path/to/your/val/images",
+    "val_annotation": "path/to/your/val/annotations.json",
+    "target_size": 1024,
+    "max_objects": 10,
+    "iou_threshold": 0.5,
+    "random_box_augmentation": true,
+    "box_noise_scale": 0.1
+  },
+  "training": {
+    "epochs": 20,
+    "batch_size": 2,
+    "learning_rate": 5e-4,
+    "min_lr": 1e-5,
+    "optimizer": "adamw",
+    "scheduler": "cosine",
+    "weight_decay": 1e-4,
+    "momentum": 0.9,
+    "lr_decay_step": 15,
+    "lr_decay_gamma": 0.1,
+    "warmup_epochs": 2,
+    "grad_clip_norm": 1.0,
+    "num_workers": 2,
+    "print_freq": 5,
+    "adaptive_update_freq": 50,
+    "smoothing_factor": 0.9
+  },
+  "losses": {
+    "focal_alpha": 0.25,
+    "focal_gamma": 2.0,
+    "dice_weight": 1.0,
+    "focal_weight": 1.0,
+    "iou_weight": 1.0,
+    "boundary_weight": 0.3
+  },
+  "distillation": {
+    "enabled": false,
+    "temperature": 4.0,
+    "alpha": 0.7,
+    "beta": 0.3,
+    "max_temperature": 4.0,
+    "min_temperature": 1.0,
+    "feature_distillation": false,
+    "attention_distillation": false
+  }
+}
